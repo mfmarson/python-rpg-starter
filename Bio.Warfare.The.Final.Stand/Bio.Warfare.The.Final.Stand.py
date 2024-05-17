@@ -1,3 +1,26 @@
+#create characters
+
+class Character:
+    def __init__(self, name, health, power):
+        self.name = name
+        self.health = health
+        self.power = power
+        
+class Hero(Character):
+    def __init__(self,name,health =40, power =5):
+        super().__init__(self,name,health,power)
+
+class Villain(Character):
+    def __init__(self, name, health = 30, power = 10):
+        super().__init__(self,name,health,power)
+        
+class Scientist (Character):
+    
+class Detective(Character):
+
+
+
+
 
 #define colors
 white = (255, 255, 255)
@@ -8,11 +31,13 @@ green = (0,255,0)
 red = (255,0,0)
 yellow = (255,255,0)
 
+#define grid parameters 
 def draw_grid(self):
     for x in range(0, width, tilesize):
         pg.draw.line(self.screen, lightgrey, (x,0), (x, heigh))
     for y in range(0, heigh, tilesize):
         pg.draw.line(self.screen, lightgrey, (0,y), (width,y))
+
         
 def draw(self):
     self.screen.fill(bgcolor)
