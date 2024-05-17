@@ -1,68 +1,70 @@
-import random
+import random #randomize for Reaper and double damage
 
-class Character:
-    def __init__(self, name, health=10, power=5, coins=20):
+class Character: #blueprint
+    def __init__(self, name, health=10, power=5, coins=20): #constructor and default params
         self.name = name
         self.health = health
         self.power = power
         self.coins = coins
+        #assigning values passed into attributes
         
-    def attack(self, enemy):
+    def attack(self, enemy): #method inside Character class self (ie attacker) 
         print(f'{self.name} attacks {enemy.name}!')
-        enemy.health -= self.power
+        enemy.health -= self.power #reduce enemy health and attacker power
         
-    def is_alive(self):
+    def is_alive(self): #method returns attackers new health confirming alive
         return self.health > 0
 
-class Hero(Character):
-    def __init__(self, name, health, power, cape, coins=20):
-        super().__init__(name, health, power, coins)
-        self.cape = cape
+class Hero(Character): #new class inherits Character class attributes and methods
+    def __init__(self, name, health, power, cape, coins=20): #constructor of class Hero
+        super().__init__(name, health, power, coins) #inherited constructor from Character class
+        self.cape = cape #assign value of cape attribute
         
-    def attack(self, enemy):
-        if random.random() < 0.2:
+    def attack(self, enemy): #attach method WITHIN HERO class - overrides inherited Character
+        if random.random() < 0.2: #adds 20% probability of double damage from attacker/self
             print(f'Critical hit! {self.name} deals double damage!')
             damage = self.power * 2
-        else:
+        else: #if no critical hit, damage is equal to hero/self.power
             damage = self.power
         print(f'{self.name} attacks {enemy.name} with {damage} damage!')
-        enemy.health -= damage
+        enemy.health -= damage #reduces enemy health by calculated damage
         
-    def buy(self, item):
-        if self.coins >= item.cost:
-            self.coins -= item.cost
-            item.apply(self)
+    def buy(self, item): #method within Hero class allowing an item param for hero to buy
+        if self.coins >= item.cost: #checks to verify hero has enough coins
+            self.coins -= item.cost #subtracts item coins from hero coins
+            item.apply(self) #applying the purchase
             print(f'{self.name} bought {item.__class__.__name__} for {item.cost} coins.')
-        else:
+        else: #if line 33 is false
             print(f'{self.name} does not have enough coins to buy {item.__class__.__name__}.')
 
-class Villain(Character):
-    def __init__(self, name, health, power, bounty=5):
-        super().__init__(name, health, power)
+class Villain(Character): #new class inherits Character class attributes and methods
+    def __init__(self, name, health, power, bounty=5): #initialize new attributes
+        super().__init__(name, health, power) #inherited from Character 
         self.bounty = bounty
 
-class Shadow(Character):
-    def __init__(self, name, health=1, power=5, bounty=10):
-        super().__init__(name, health, power)
+class Shadow(Character): #new class inherits Character class attributes and methods
+    def __init__(self, name, health=1, power=5, bounty=10): #initialize new attributes
+        super().__init__(name, health, power) #inherits from Character
         self.bounty = bounty
 
-    def attack(self, enemy):
-        if random.random() < 0.1:
-            print(f'{self.name} avoids the attack!')
-        else:
+    def attack(self, enemy): #attack WITHIN SHADOW 
+        if random.random() < 0.1: #10% chance to avoid attack
+            print(f'{self.name} avoids the attack!') #Shadow avoids attack
+        else: #Shadow attacks hero
             print(f'{self.name} attacks {enemy.name}!')
-            enemy.health -= self.power
+            enemy.health -= self.power #hero health - Shadow power
 
-class Zombie(Character):
-    def __init__(self, name='Zombie', health=0, power=5, coins=0):
+class Zombie(Character): #new class inherits Character class attributes and methods
+    def __init__(self, name='Zombie', health=0, power=5, coins=0): #zombie attributes
         super().__init__(name, health, power, coins)
 
-    def is_alive(self):
+    def is_alive(self): #is this needed? override Character method?
         return self.health > 0
 
-hero = Character('Hero', 20, 8)
+hero = Character('Hero', 20, 8) #same as parent objects
 zombie = Zombie()
 
+#while loop shows if zombie dead regardless
 while zombie.is_alive() and hero.is_alive():
     hero.attack(zombie)
     if not zombie.is_alive():
@@ -70,49 +72,49 @@ while zombie.is_alive() and hero.is_alive():
         break
 
     zombie.attack(hero)
-    if not hero.is_alive():
+    if not hero.is_alive(): #zombie attack hero
         print('The hero has fallen!')
         break
 
-class Reaper:
+class Reaper: #class of its own - stands alone - "static?" when endgame returns true (10% chance) the game ends
     def end_game():
         return random.random() < 0.1
 
 class Panda(Character):
     def hug(self, target):
-        if target == self:
+        if target == self: #Po the panda gives hero a hug
             print(f'{self.name} gave {hero.name} a hug.')
-        else:
+        else: #Po the panda gives target-villain a hug
             print(f'{self.name} gave {target.name} a hug.')
 
-class Store:
-    class Item:
+class Store: # class for store holding (nesting) different items for purchase
+    class Item: #initializing the future item costs
         def __init__(self, cost):
             self.cost = cost
 
-        def apply(self, character):
-            pass
+        def apply(self, character): #added so specific item characters can be added
+            pass #allows any item
 
-    class Tonic(Item):
+    class Tonic(Item): #subclass of Item
         def __init__(self):
-            super().__init__(5)
+            super().__init__(5) #5 coins from inherited class Item self.cost
 
         def apply(self, character):
-            character.health += 2
+            character.health += 2 #adds 2 health to hero
             print(f"{character.name}'s health has increased by 2!")
 
     class Sword(Item):
         def __init__(self):
-            super().__init__(10)
+            super().__init__(10) #10 coins from inherited class Item self.cost
 
         def apply(self, character):
-            character.power += 2
+            character.power += 2 #adds 2 to hero power
             print(f"{character.name}'s power has increased by 2!")
 
-    items = [Tonic(), Sword()]
+    items = [Tonic(), Sword()] #holds all item instances (listed items)
 
   
-    def do_shopping(hero):
+    def do_shopping(hero): #shopping with hero parameter 
         print(f'Welcome to the store! You have {hero.coins} coins.')
         print('Available items:')
         for i, item in enumerate(Store.items):
@@ -137,7 +139,7 @@ if hero.cape:
 else:
     print('NO CAPES!')
 
-def play_game():
+def play_game(): #player input selections outcomes
     while villain.health > 0 and hero.health > 0:
         print(f'You have {hero.health} health and {hero.power} power.')
         print(f'{villain.name} has {villain.health} health and {villain.power} power.')
