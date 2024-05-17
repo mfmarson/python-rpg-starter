@@ -26,4 +26,5 @@ The Detective - gives hints to Hero about Villain location and status
 
 ---
 
-Game ends when: - the villain is stopped before getting to all 3 checkpoints - the hero finds antidote, gives antidote to scientist and stops villain from getting to checkpoints
+Game ends when: - the villain gets to all 3 checkpoints OR the hero finds/stops villain, gets antidote takes antidote to scientist 
+Does this need a timeframe? 

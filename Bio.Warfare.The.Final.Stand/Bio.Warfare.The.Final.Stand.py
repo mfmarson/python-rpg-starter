@@ -12,12 +12,23 @@ class Hero(Character):
 
 class Villain(Character):
     def __init__(self, name, health = 30, power = 10):
-        super().__init__(self,name,health,power)
+        super().__init__(self,name,health,power) 
         
 class Scientist (Character):
+    def __init__(self,name, health, power):
+     super().__init__(self,name,health,power)
+     
+     #receives the antidote to end the game 
     
 class Detective(Character):
+    def __init__(self,name, health, power):
+        super(). __init__(self,name,health,power)
+        
+        #gives Hero hints to find Villain but takes 10 hero health
 
+
+scientist = ('Dr.Lorme', 0, 0)
+detective = ('Detective Dupin', 0, 0)
 
 
 
