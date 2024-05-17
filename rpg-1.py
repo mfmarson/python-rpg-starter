@@ -130,7 +130,7 @@ class Store:
 hero = Hero('Hercules', 20, 8, False)
 villain = Villain('Hades', 40, 2)
 panda = Panda('Po')
-character = Zombie()
+
 
 if hero.cape:
     print(f'{hero.name} has a cape.')
