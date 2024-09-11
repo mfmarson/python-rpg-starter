@@ -40,7 +40,7 @@ def ask_question(question):
     print(question["question"])
     for option in question["options"]:
         print(option)
-        print("You must unlock the hints by answering these questions.")
+        # print("You must unlock the hints by answering these questions.")
     answer = input("Enter the number of your choice: ")
     return answer == question["answer"]
 
@@ -75,8 +75,8 @@ def start_journey():
             else:
                 print("Incorrect answer. You didn't get the clue.")
         else:
-            print("Invalid choice. You wasted time and didn't find a clue.")
-    input("You have found Lucius Crow! Don't let him get away with the Catalyst! \n Press Enter to continue...")
+            # print("Invalid choice. You wasted time and didn't find a clue.")
+            input("You have found Lucius Crow! Don't let him get away with the Catalyst! \n Press Enter to continue...")
 
 # Battle with the villain
 def battle_villain():
